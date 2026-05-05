@@ -45,17 +45,36 @@ class Node:
         # Crie as matrizes de transformação e concatene elas
 
         # Scale matrix
-        S = np.eye(4)
+        # S = np.eye(4)
+        # s = np.zeros((4,4), np.float)
+        s = np.diag([self.scale[0], self.scale[1], self.scale[2], 1])
 
         # Translation matrix
-        T = np.eye(4)
+        # T = np.eye(4)
+        # t = np.zeros((4,4), np.float)
+        t = np.diag([1,1,1,1])
+
+        t[0,3] = self.translation[0]
+        t[1,3] = self.translation[1]
+        t[2,3] = self.translation[2]
+
 
         # Rotation matrix
         # Dica: utilize o método Rotation.from_euler para criar a rotação
         # Observe que os ângulos de rotação estão em graus
-        R = np.eye(4)
+        # R = np.eye(4)
+        r = Rotation.from_euler('xyz', self.rotation, degrees=True)
+        r = r.as_matrix()
+        print(np.shape(r))
+        r = np.append(r, [[0 , 0 ,0]], axis=0)
+        print(np.shape(r))
+        r = np.append(r, [[0] , [0], [0], [1]], axis=1)
 
-        final_transformation =
+        print(t)
+        print(r)
+        print(s)
+
+        final_transformation = t @ r @ s
 
         #########################################################################
 

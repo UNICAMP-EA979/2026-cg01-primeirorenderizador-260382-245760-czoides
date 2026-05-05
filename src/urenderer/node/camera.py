@@ -31,10 +31,17 @@ class Camera(Node):
         Returns:
             np.ndarray: 4x4 projection matrix
         '''
+        c = 1/np.tan(np.radians(self.vertical_fov)/2)
+        a = self.screen_width / self.screen_height
 
         ## SEU CÓDIGO AQUI #####################################################
         # Crie a matriz de projeção utilizando a fórmula
         matrix = np.zeros((4, 4))
+        matrix[0, 0] =  c/a
+        matrix[1, 1] =  c
+        matrix[2, 2] =  - (self.far_plane + self.near_plane)/(self.far_plane - self.near_plane) 
+        matrix[2, 3] =  - (2.0 * self.far_plane * self.near_plane)/(self.far_plane - self.near_plane)
+        matrix[3, 2] = -1
 
         #########################################################################
 
