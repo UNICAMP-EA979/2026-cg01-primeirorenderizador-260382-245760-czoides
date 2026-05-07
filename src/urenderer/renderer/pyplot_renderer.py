@@ -134,8 +134,8 @@ class PyplotRenderer(Renderer):
         # A segunda coordenada deve ser mapeada para [0, self.screen_height]
 
         triangle[:, 0] = ((triangle[:, 0]  + 1.0)/2.0) * self.screen_width
-        triangle[:, 1] = ((triangle[:, 1]  + 1.0)/2.0) * self.screen_width
-
+        triangle[:, 1] = ((triangle[:, 1]  + 1.0)/2.0) * self.screen_height
+        triangle[:, 2] = ((triangle[:, 2]  + 1.0)/2.0)
         #########################################################################
 
         return triangle
