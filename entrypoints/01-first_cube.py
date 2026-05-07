@@ -11,7 +11,7 @@ if __name__ == "__main__":
     cube = urenderer.node.Node()
 
     cube.translation = np.array([0, 0, -5], np.float64)
-    cube.rotation = np.array([45, 45, 0], np.float64)
+    cube.rotation = np.array([45, 45, 45], np.float64)
     cube.render_data = urenderer.geometry.polygonal_ifs.get_ifs_cube()
 
     runtime.scene.add_child(cube)
