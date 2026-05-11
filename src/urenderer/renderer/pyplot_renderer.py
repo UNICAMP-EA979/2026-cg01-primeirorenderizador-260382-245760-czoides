@@ -75,7 +75,7 @@ class PyplotRenderer(Renderer):
         # Projete o triângulo, combinando a matriz de transformação do modelo,
         #  view matriz (self._view_matrix) e a matriz de projeção (self._projection_matrix)
 
-        triangle_proj =
+        triangle_proj = (self._projection_matrix @ self._view_matrix @ model_transformation @ triangle.T).T
 
         #########################################################################
 
@@ -104,11 +104,12 @@ class PyplotRenderer(Renderer):
         # Todos os vértices do triângulo devem estar dentro do volume: -v_w <= v_x, v_y, v_z <= v_w
 
         # Checa se o triângulo removido
-        clip =
-
+        v_w = triangle[:, 3][..., None ]
+        clip =  np.max(np.logical_or((triangle > v_w), triangle < -v_w))
+        
         if not clip:
             # Normalize o triângulo, dividindo cada vértice pelo seu último valor v_w
-            triangle_ndc =
+            triangle_ndc = triangle/v_w
 
             return clip, triangle_ndc
 
@@ -132,6 +133,9 @@ class PyplotRenderer(Renderer):
         # A primeira coordenada deve ser mapeada para [0, self.screen_width]
         # A segunda coordenada deve ser mapeada para [0, self.screen_height]
 
+        triangle[:, 0] = ((triangle[:, 0]  + 1.0)/2.0) * self.screen_width
+        triangle[:, 1] = ((triangle[:, 1]  + 1.0)/2.0) * self.screen_height
+        triangle[:, 2] = ((triangle[:, 2]  + 1.0)/2.0)
         #########################################################################
 
         return triangle
